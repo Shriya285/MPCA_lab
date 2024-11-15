@@ -1,0 +1,28 @@
+ A: .BYTE 1,2,3,4,5,6,7,8,9,10
+ LDR R0, =A
+ MOV R1, #5 
+ MOV R2, #-1 
+ MOV R3, #0 
+ MOV R4, #9 
+ MOV R8, #0
+ L:
+ CMP R4, R3
+ BMI EXIT 
+ ADD R5, R3, R4
+ ADD R6, R8, R5, LSR #1 
+ LDRB R7, [R0,R6]
+ CMP R7, R1
+ BEQ FOUND
+ BMI LESSER
+ SUB R6, R6, #1
+ MOV R4, R6
+ B L
+ FOUND:
+ MOV R2, R6
+ SWI 0x011
+ LESSER:
+ ADD R6, R6,#1
+ MOV R3, R6
+ B L
+ EXIT:
+ SWI 0x011
